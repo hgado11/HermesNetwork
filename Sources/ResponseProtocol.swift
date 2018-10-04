@@ -167,8 +167,11 @@ public class Response: ResponseProtocol {
 		return String(data: d, encoding: encoding ?? .utf8)
 	}
 	
-	private lazy var cachedJSON: JSON = {
-		return JSON(data: self.data ?? Data())
-	}()
+    private lazy var cachedJSON: JSON = {
+        do {
+            return try JSON(data: self.data ?? Data())
+        }
+        catch { return JSON(Data()) }
+    }()
 	
 }
